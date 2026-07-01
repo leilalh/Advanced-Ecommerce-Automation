@@ -1,16 +1,15 @@
 package tests;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 import pages.HomePage;
+import pages.ProductPage;
 import pages.SignupInformationPage;
 import pages.SignupLoginPage;
 
 public class AutomationTest extends BaseTest{
 
-    @Test
+    @Test(priority = 2)
     public void testNewUserSignup(){
 
         HomePage homePage = new HomePage(driver,wait);
@@ -18,7 +17,7 @@ public class AutomationTest extends BaseTest{
         SignupInformationPage signupInformationPage = new SignupInformationPage(driver, wait);
 
         homePage.clickloginSign();
-        signupLoginPage.entersignupNameEmail("leila","leiaa860009@gmail.com");
+        signupLoginPage.entersignupNameEmail("leila","test554@gmail.com");
         signupLoginPage.clicksignupbutton();
 
         signupInformationPage.clickgenderbutton();
@@ -35,9 +34,12 @@ public class AutomationTest extends BaseTest{
 
 
 
+
+
+
     }
 
-    @Test
+    @Test(priority = 1)
     public void testExistingUser(){
 
         HomePage homePage = new HomePage(driver,wait);
@@ -45,8 +47,31 @@ public class AutomationTest extends BaseTest{
 
 
         homePage.clickloginSign();
-        signupLoginPage.enterloginEmailPassword("leiaa86500999@gmail.com", "1234");
+        signupLoginPage.enterloginEmailPassword("test11@gmail.com", "1234");
         signupLoginPage.clickloginbutton();
 
+    }
+
+    @Test(priority = 3)
+    public void testAddProductToCart(){
+        HomePage homepage = new HomePage(driver, wait);
+        SignupLoginPage signupLoginPage = new SignupLoginPage(driver, wait);
+        ProductPage productPage = new ProductPage(driver, wait);
+
+        //............Login...............
+        homepage.clickloginSign();
+        signupLoginPage.enterloginEmailPassword("leila.lahmidi11@gmail.com", "aJ3L3aJ53i@7nMj");
+        signupLoginPage.clicksignupbutton();
+
+        //............. ADD Products scenario.............
+        homepage.clickprodcutsButton();
+        productPage.clickViewProduct();
+        productPage.enterquantity("3");
+        productPage.clickaddcart();
+
+        //..........Assert..........
+
+        org.testng.Assert.assertEquals(productPage.getPopupSuccessMessage(), "Your product has been added to cart.");
+        productPage.clickcontinueshopping();
     }
 }

@@ -10,6 +10,7 @@ public class HomePage {
     private WebDriverWait wait;
 
     private By loginSignupLink = By.xpath("//a[contains(text(),' Signup / Login')]");
+    private By prodcutsButton = By.xpath("//a[contains(text(), ' Products')]");
 
     public HomePage(WebDriver driver,WebDriverWait wait){
         this.driver = driver;
@@ -17,6 +18,11 @@ public class HomePage {
     }
 
     public void clickloginSign(){
-        wait.until(ExpectedConditions.elementToBeClickable(loginSignupLink)).click();
+        org.openqa.selenium.JavascriptExecutor js = (org.openqa.selenium.JavascriptExecutor) driver;
+        js.executeScript("arguments[0].click();",driver.findElement(loginSignupLink));
+
+    }
+    public void clickprodcutsButton(){
+        wait.until(ExpectedConditions.elementToBeClickable(prodcutsButton)).click();
     }
 }
