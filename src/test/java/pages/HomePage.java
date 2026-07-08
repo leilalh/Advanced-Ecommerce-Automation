@@ -11,6 +11,7 @@ public class HomePage {
 
     private By loginSignupLink = By.xpath("//a[contains(text(),' Signup / Login')]");
     private By prodcutsButton = By.xpath("//a[contains(text(), ' Products')]");
+    private By cartButton = By.xpath("//a[contains(text(), ' Cart')]");
 
     public HomePage(WebDriver driver,WebDriverWait wait){
         this.driver = driver;
@@ -25,4 +26,11 @@ public class HomePage {
     public void clickprodcutsButton(){
         wait.until(ExpectedConditions.elementToBeClickable(prodcutsButton)).click();
     }
+
+    public void clickCartButton(){
+
+                wait.until(ExpectedConditions.visibilityOfElementLocated(cartButton)).click();
+    }
+
+
 }

@@ -2,10 +2,7 @@ package tests;
 
 import org.openqa.selenium.By;
 import org.testng.annotations.Test;
-import pages.HomePage;
-import pages.ProductPage;
-import pages.SignupInformationPage;
-import pages.SignupLoginPage;
+import pages.*;
 
 public class AutomationTest extends BaseTest{
 
@@ -17,7 +14,7 @@ public class AutomationTest extends BaseTest{
         SignupInformationPage signupInformationPage = new SignupInformationPage(driver, wait);
 
         homePage.clickloginSign();
-        signupLoginPage.entersignupNameEmail("leila","test554@gmail.com");
+        signupLoginPage.entersignupNameEmail("leila","test5954@gmail.com");
         signupLoginPage.clicksignupbutton();
 
         signupInformationPage.clickgenderbutton();
@@ -47,8 +44,10 @@ public class AutomationTest extends BaseTest{
 
 
         homePage.clickloginSign();
-        signupLoginPage.enterloginEmailPassword("test11@gmail.com", "1234");
+        signupLoginPage.enterloginEmailPassword("test119@gmail.com", "1234");
         signupLoginPage.clickloginbutton();
+
+
 
     }
 
@@ -57,21 +56,49 @@ public class AutomationTest extends BaseTest{
         HomePage homepage = new HomePage(driver, wait);
         SignupLoginPage signupLoginPage = new SignupLoginPage(driver, wait);
         ProductPage productPage = new ProductPage(driver, wait);
+        CartPage cartPage = new CartPage(driver, wait);
+        CheckoutPage checkoutPage = new CheckoutPage(driver, wait);
+
+
 
         //............Login...............
         homepage.clickloginSign();
-        signupLoginPage.enterloginEmailPassword("leila.lahmidi11@gmail.com", "aJ3L3aJ53i@7nMj");
-        signupLoginPage.clicksignupbutton();
+        signupLoginPage.enterloginEmailPassword("leilabueckers@gmail.com", "djbH5iHKjakiHN@");
+        signupLoginPage.clickloginbutton();
+
+        //........Check if the cart if empty............
+        homepage.clickCartButton();
+        cartPage.clearCartIfNotEmpty();
+
 
         //............. ADD Products scenario.............
         homepage.clickprodcutsButton();
         productPage.clickViewProduct();
-        productPage.enterquantity("3");
+        productPage.enterquantity("2");
         productPage.clickaddcart();
 
         //..........Assert..........
 
         org.testng.Assert.assertEquals(productPage.getPopupSuccessMessage(), "Your product has been added to cart.");
         productPage.clickcontinueshopping();
+
+        //.............Cart........
+        homepage.clickCartButton();
+
+        org.testng.Assert.assertTrue(cartPage.isProductDisplayedInCart());
+        org.testng.Assert.assertEquals(cartPage.getProductQuantityInCart(), "2");
+        cartPage.clickProceedButton();
+
+        //..........CheckOut..............
+        checkoutPage.clickPlaceOrder();
+        checkoutPage.enterPymentInformation("leila lahmidi","66688899", "888", "05", "2033");
+        checkoutPage.clickPayButton();
+
+        org.testng.Assert.assertEquals(checkoutPage.getOrderConfirmationMessage(), "ORDER PLACED!");
+
+
+
     }
+
+
 }
