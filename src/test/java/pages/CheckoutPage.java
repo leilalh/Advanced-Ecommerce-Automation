@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
+
 public class CheckoutPage {
 
     private WebDriver driver;
@@ -18,6 +20,7 @@ public class CheckoutPage {
     private By expiryYear = By.cssSelector("input[data-qa='expiry-year']");
     private By payButton = By.cssSelector("button[data-qa='pay-button']");
     private By orderConfirmationMessage = By.cssSelector("h2[data-qa='order-placed']");
+    private By downladInvoice = By.cssSelector(".btn.btn-default.check_out");
 
     public CheckoutPage(WebDriver driver, WebDriverWait wait){
         this.driver= driver;
@@ -38,10 +41,31 @@ public class CheckoutPage {
 
     }
     public void clickPayButton(){
-        wait.until(ExpectedConditions.elementToBeClickable(payButton)).click();
+
+        org.openqa.selenium.JavascriptExecutor js = (org.openqa.selenium.JavascriptExecutor) driver;
+        js.executeScript("arguments[0].click();",driver.findElement(payButton));
+
+       // wait.until(ExpectedConditions.elementToBeClickable(payButton)).click();
     }
     public String getOrderConfirmationMessage(){
         return wait.until(ExpectedConditions.visibilityOfElementLocated(orderConfirmationMessage)).getText();
+    }
+    public void clickDownloadInvoice(){
+        wait.until(ExpectedConditions.elementToBeClickable(downladInvoice)).click();
+    }
+
+    public boolean isFileDownloaded(String downloadPath, String fileName){
+        File dir = new File(downloadPath);
+        File[] dirContents = dir.listFiles();
+
+        if (dirContents != null){
+            for (File file : dirContents){
+                if (file.getName().equals(fileName)){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 

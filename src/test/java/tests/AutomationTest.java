@@ -95,6 +95,18 @@ public class AutomationTest extends BaseTest{
         checkoutPage.clickPayButton();
 
         org.testng.Assert.assertEquals(checkoutPage.getOrderConfirmationMessage(), "ORDER PLACED!");
+        checkoutPage.clickDownloadInvoice();
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e){
+            e.printStackTrace();
+        }
+
+        String downloadPath = "C:\\Users\\BeeClick\\Downloads";
+        String expectedFileName = "invoice.txt";
+
+        org.testng.Assert.assertTrue(checkoutPage.isFileDownloaded(downloadPath, expectedFileName), "Error : Invoice file was not found");
 
 
 
