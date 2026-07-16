@@ -1,6 +1,7 @@
 package tests;
 
 import org.openqa.selenium.By;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.*;
 
@@ -51,8 +52,9 @@ public class AutomationTest extends BaseTest{
 
     }
 
-    @Test(priority = 3)
-    public void testAddProductToCart(){
+    @Test(priority = 3, dataProvider = "loginTestData")
+    public void testAddProductToCart(String email, String password, String fullname){
+
         HomePage homepage = new HomePage(driver, wait);
         SignupLoginPage signupLoginPage = new SignupLoginPage(driver, wait);
         ProductPage productPage = new ProductPage(driver, wait);
@@ -63,7 +65,7 @@ public class AutomationTest extends BaseTest{
 
         //............Login...............
         homepage.clickloginSign();
-        signupLoginPage.enterloginEmailPassword("leilabueckers@gmail.com", "djbH5iHKjakiHN@");
+        signupLoginPage.enterloginEmailPassword(email, password);
         signupLoginPage.clickloginbutton();
 
         //........Check if the cart if empty............
@@ -91,7 +93,7 @@ public class AutomationTest extends BaseTest{
 
         //..........CheckOut..............
         checkoutPage.clickPlaceOrder();
-        checkoutPage.enterPymentInformation("leila lahmidi","66688899", "888", "05", "2033");
+        checkoutPage.enterPymentInformation(fullname,"66688899", "888", "05", "2033");
         checkoutPage.clickPayButton();
 
         org.testng.Assert.assertEquals(checkoutPage.getOrderConfirmationMessage(), "ORDER PLACED!");
@@ -110,6 +112,18 @@ public class AutomationTest extends BaseTest{
 
 
 
+    }
+
+    @DataProvider(name = "loginTestData")
+    public Object[][] getLoginData() {
+
+        return new Object[][]{
+
+                {"leilabueckers@gmail.com", "djbH5iHKjakiHN@", "Lela User One"},
+                {
+                        "leila.lahmidi11@gmail.com", "aJ3L3aJ53i@7nMj", "Leila User Two"
+                }
+        };
     }
 
 
