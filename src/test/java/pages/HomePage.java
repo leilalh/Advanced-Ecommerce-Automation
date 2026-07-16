@@ -1,6 +1,7 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -30,6 +31,13 @@ public class HomePage {
     public void clickCartButton(){
 
                 wait.until(ExpectedConditions.visibilityOfElementLocated(cartButton)).click();
+    }
+
+    public void removeAds(){
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        js.executeScript("document.querySelectorAll('iframe').forEach(e=> e.remove());");
+        System.out.println("Ads removed successfully using Javascript!");
     }
 
 

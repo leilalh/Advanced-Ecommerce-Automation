@@ -75,6 +75,7 @@ public class AutomationTest extends BaseTest{
 
         //............. ADD Products scenario.............
         homepage.clickprodcutsButton();
+        homepage.removeAds();
         productPage.clickViewProduct();
         productPage.enterquantity("2");
         productPage.clickaddcart();
@@ -90,9 +91,11 @@ public class AutomationTest extends BaseTest{
         org.testng.Assert.assertTrue(cartPage.isProductDisplayedInCart());
         org.testng.Assert.assertEquals(cartPage.getProductQuantityInCart(), "2");
         cartPage.clickProceedButton();
+        homepage.removeAds();
 
         //..........CheckOut..............
         checkoutPage.clickPlaceOrder();
+        homepage.removeAds();
         checkoutPage.enterPymentInformation(fullname,"66688899", "888", "05", "2033");
         checkoutPage.clickPayButton();
 
