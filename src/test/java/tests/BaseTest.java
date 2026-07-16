@@ -1,9 +1,11 @@
 package tests;
 
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
@@ -44,6 +46,36 @@ public class BaseTest {
 
 
     @AfterMethod
+    public void recordFailure(org.testng.ITestResult result){
+
+        if (org.testng.ITestResult.FAILURE == result.getStatus()){
+            org.openqa.selenium.TakesScreenshot camera = (org.openqa.selenium.TakesScreenshot) driver;
+
+            java.io.File screenshot = camera.getScreenshotAs(org.openqa.selenium.OutputType.FILE);
+
+            try {
+                String directoryPath = "screenshots/";
+                String fileName = result.getName()+"_"+ System.currentTimeMillis()+".png";
+
+                java.io.File directory = new java.io.File(directoryPath);
+
+                if (!directory.exists()){
+                    directory.mkdirs();
+                }
+
+                java.nio.file.Files.copy(
+                        screenshot.toPath(), java.nio.file.Paths.get(directoryPath + fileName),
+                        java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+
+
+                System.out.println("Screenshot captured for failed test : "+result.getName());
+            } catch (java.io.IOException e){
+                System.out.println("Could not save screenshots: "+ e.getMessage());
+            }
+        }
+
+    }
+
     public void teardown(){
         if (driver!=null){
             driver.quit();
