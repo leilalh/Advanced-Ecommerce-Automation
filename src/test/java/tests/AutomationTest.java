@@ -99,7 +99,7 @@ public class AutomationTest extends BaseTest{
         checkoutPage.enterPymentInformation(fullname,"66688899", "888", "05", "2033");
         checkoutPage.clickPayButton();
 
-        org.testng.Assert.assertEquals(checkoutPage.getOrderConfirmationMessage(), "ORDER PLACED!");
+        org.testng.Assert.assertEquals(checkoutPage.getOrderConfirmationMessage(), "ORDER PLACED!bbb");
         checkoutPage.clickDownloadInvoice();
 
         try {
