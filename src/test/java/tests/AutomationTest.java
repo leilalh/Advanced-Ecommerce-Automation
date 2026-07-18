@@ -71,6 +71,7 @@ public class AutomationTest extends BaseTest{
         //........Check if the cart if empty............
         homepage.clickCartButton();
         cartPage.clearCartIfNotEmpty();
+        homepage.removeAds();
 
 
         //............. ADD Products scenario.............
@@ -99,7 +100,7 @@ public class AutomationTest extends BaseTest{
         checkoutPage.enterPymentInformation(fullname,"66688899", "888", "05", "2033");
         checkoutPage.clickPayButton();
 
-        org.testng.Assert.assertEquals(checkoutPage.getOrderConfirmationMessage(), "ORDER PLACED!bbb");
+        org.testng.Assert.assertEquals(checkoutPage.getOrderConfirmationMessage(), "ORDER PLACED!");
         checkoutPage.clickDownloadInvoice();
 
         try {
