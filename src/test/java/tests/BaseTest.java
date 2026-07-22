@@ -55,12 +55,16 @@ public class BaseTest {
 
         ChromeOptions options = new ChromeOptions();
 
+        //........... Add Headless /GitHub Actions
+        options.addArguments("--headless=new");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--window-size=1920,1080");
+
         Map<String, Object> prefs = new HashMap<String, Object>();
         prefs.put("profile.password_manager_leak_detection", false);
         options.setExperimentalOption("prefs",prefs);
 
-//        options.addArguments("--headless=new");
-//        options.addArguments("--window-size=1920,1080");
 
         driver = new ChromeDriver(options);
         driver.get("https://automationexercise.com");
