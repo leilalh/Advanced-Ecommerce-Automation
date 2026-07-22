@@ -31,4 +31,4 @@ jobs:
         with:
           name:
             extent-execution-report
-          path: test-output/
+          path: reports/
