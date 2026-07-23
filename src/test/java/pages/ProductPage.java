@@ -2,6 +2,7 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -25,9 +26,11 @@ public class ProductPage {
 
     public void clickViewProduct(){
 
-        wait.until(ExpectedConditions.elementToBeClickable(viewproducts));
+        WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(viewproducts));
+
         org.openqa.selenium.JavascriptExecutor js = (org.openqa.selenium.JavascriptExecutor) driver;
-        js.executeScript("arguments[0].click();", driver.findElement(viewproducts));
+        js.executeScript("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", element);
+        js.executeScript("arguments[0].click();", element);
     }
 
     public void enterquantity(String numberQuantity){
