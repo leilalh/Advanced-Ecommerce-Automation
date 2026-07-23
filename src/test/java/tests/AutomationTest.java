@@ -17,7 +17,7 @@ public class AutomationTest extends BaseTest{
         SignupInformationPage signupInformationPage = new SignupInformationPage(driver, wait);
 
         homePage.clickloginSign();
-        signupLoginPage.entersignupNameEmail("leila","test5900054@gmail.com");
+        signupLoginPage.entersignupNameEmail("leila","test59055054@gmail.com");
         signupLoginPage.clicksignupbutton();
 
         signupInformationPage.clickgenderbutton();

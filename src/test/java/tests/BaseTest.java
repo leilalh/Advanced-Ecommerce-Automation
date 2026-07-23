@@ -62,6 +62,10 @@ public class BaseTest {
         options.addArguments("--disable-gpu");
         options.addArguments("--remote-allow-origins=*");
         options.addArguments("--window-size=1920,1080");
+        options.addArguments("--disable-extensions");
+        options.addArguments("--disable-popup-blocking");
+        options.addArguments("--incognito");
+
 
         Map<String, Object> prefs = new HashMap<String, Object>();
         prefs.put("profile.password_manager_leak_detection", false);
