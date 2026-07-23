@@ -61,7 +61,7 @@ public class BaseTest {
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--disable-gpu");
         options.addArguments("--remote-allow-origins=*");
-//        options.addArguments("--window-size=1920,1080");
+        options.addArguments("--window-size=1920,1080");
 
         Map<String, Object> prefs = new HashMap<String, Object>();
         prefs.put("profile.password_manager_leak_detection", false);

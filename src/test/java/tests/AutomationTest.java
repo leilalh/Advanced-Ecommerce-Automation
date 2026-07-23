@@ -5,6 +5,8 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.*;
 
+import java.io.File;
+
 public class AutomationTest extends BaseTest{
 
     @Test(priority = 2)
@@ -15,7 +17,7 @@ public class AutomationTest extends BaseTest{
         SignupInformationPage signupInformationPage = new SignupInformationPage(driver, wait);
 
         homePage.clickloginSign();
-        signupLoginPage.entersignupNameEmail("leila","test5954@gmail.com");
+        signupLoginPage.entersignupNameEmail("leila","test5900054@gmail.com");
         signupLoginPage.clicksignupbutton();
 
         signupInformationPage.clickgenderbutton();
@@ -45,7 +47,7 @@ public class AutomationTest extends BaseTest{
 
 
         homePage.clickloginSign();
-        signupLoginPage.enterloginEmailPassword("test119@gmail.com", "1234");
+        signupLoginPage.enterloginEmailPassword("leila.lahmidi11@gmail.com", "1234");
         signupLoginPage.clickloginbutton();
 
 
@@ -109,7 +111,8 @@ public class AutomationTest extends BaseTest{
             e.printStackTrace();
         }
 
-        String downloadPath = "C:\\Users\\BeeClick\\Downloads";
+//        String downloadPath = "C:\\Users\\BeeClick\\Downloads";
+        String downloadPath = System.getProperty("user.home") + File.separator + "Downloads";
         String expectedFileName = "invoice.txt";
 
         org.testng.Assert.assertTrue(checkoutPage.isFileDownloaded(downloadPath, expectedFileName), "Error : Invoice file was not found");
