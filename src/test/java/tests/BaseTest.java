@@ -52,10 +52,9 @@ public class BaseTest {
 
         test = extent.createTest(method.getName());
 
-
         ChromeOptions options = new ChromeOptions();
 
-        //........... Add Headless /GitHub Actions
+        // Advanced Headless Settings
         options.addArguments("--headless=new");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
@@ -66,26 +65,34 @@ public class BaseTest {
         options.addArguments("--disable-popup-blocking");
         options.addArguments("--incognito");
 
+        // Specify the download folder for the project
+        String downloadPath = System.getProperty("user.dir") + java.io.File.separator + "target" + java.io.File.separator + "downloads";
+
+        // Create the folder if it doesn't exist
+        java.io.File downloadDir = new java.io.File(downloadPath);
+        if (!downloadDir.exists()) {
+            downloadDir.mkdirs();
+        }
 
         Map<String, Object> prefs = new HashMap<String, Object>();
         prefs.put("profile.password_manager_leak_detection", false);
-
-
-        String downloadPath = System.getProperty("user.dir") + File.separator + "downloads";
         prefs.put("download.default_directory", downloadPath);
         prefs.put("download.prompt_for_download", false);
         prefs.put("plugins.always_open_pdf_externally", true);
 
-        options.setExperimentalOption("prefs",prefs);
-
+        options.setExperimentalOption("prefs", prefs);
 
         driver = new ChromeDriver(options);
+
+        // Force Chrome Headless on Linux to allow downloads to the desired path
+        Map<String, Object> commandParams = new HashMap<>();
+        commandParams.put("behavior", "allow");
+        commandParams.put("downloadPath", downloadPath);
+        ((ChromeDriver) driver).executeCdpCommand("Page.setDownloadBehavior", commandParams);
+
         driver.get("https://automationexercise.com");
         driver.manage().window().maximize();
         wait = new WebDriverWait(driver, Duration.ofSeconds(15));
-
-
-
     }
 
 

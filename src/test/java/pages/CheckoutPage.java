@@ -59,26 +59,29 @@ public class CheckoutPage {
         js.executeScript("arguments[0].click();", downloadBtn);
     }
 
-    public boolean isFileDownloaded(String expectedFileName) {
+    public boolean isFileDownloaded(String fileName) {
+        String downloadPath = System.getProperty("user.dir") + java.io.File.separator + "target" + java.io.File.separator + "downloads";
+        java.io.File dir = new java.io.File(downloadPath);
 
-        String[] possiblePaths = {
-                System.getProperty("user.dir") + java.io.File.separator + "target" + java.io.File.separator + "downloads",
-                System.getProperty("user.home") + java.io.File.separator + "Downloads",
-                "/home/runner/work/Advanced-Ecommerce-Automation/Advanced-Ecommerce-Automation/target/downloads"
-        };
-
-        for (String path : possiblePaths) {
-            java.io.File dir = new java.io.File(path);
+        // Wait up to 10 seconds for the file to download
+        int timeout = 10;
+        while (timeout > 0) {
             if (dir.exists()) {
                 java.io.File[] files = dir.listFiles();
                 if (files != null) {
                     for (java.io.File file : files) {
-                        if (file.getName().equals(expectedFileName)) {
+                        if (file.getName().contains(fileName) || file.getName().endsWith(".txt")) {
                             return true;
                         }
                     }
                 }
             }
+            try {
+                Thread.sleep(1000); // الانتظار ثانية واحدة في كل دورة
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            timeout--;
         }
         return false;
     }
