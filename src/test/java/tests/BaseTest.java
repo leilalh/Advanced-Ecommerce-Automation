@@ -48,44 +48,40 @@ public class BaseTest {
 
 
     @BeforeMethod
-    public void setup(java.lang.reflect.Method method){
-
+    public void setup(java.lang.reflect.Method method) {
         test = extent.createTest(method.getName());
 
-        ChromeOptions options = new ChromeOptions();
 
-        // Advanced Headless Settings
+        String downloadPath = System.getProperty("user.dir") + java.io.File.separator + "target" + java.io.File.separator + "downloads";
+        java.io.File downloadDir = new java.io.File(downloadPath);
+        if (!downloadDir.exists()) {
+            downloadDir.mkdirs();
+        }
+
+        ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless=new");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--disable-gpu");
-        options.addArguments("--remote-allow-origins=*");
         options.addArguments("--window-size=1920,1080");
-        options.addArguments("--disable-extensions");
-        options.addArguments("--disable-popup-blocking");
-        options.addArguments("--incognito");
-
-        // Specify the download folder for the project
-        String downloadPath = System.getProperty("user.dir") + java.io.File.separator + "target" + java.io.File.separator + "downloads";
 
 
-
-        Map<String, Object> prefs = new HashMap<String, Object>();
-        prefs.put("profile.password_manager_leak_detection", false);
+        Map<String, Object> prefs = new HashMap<>();
         prefs.put("download.default_directory", downloadPath);
         prefs.put("download.prompt_for_download", false);
-        prefs.put("plugins.always_open_pdf_externally", true);
+        prefs.put("download.directory_upgrade", true);
+        prefs.put("profile.default_content_settings.popups", 0);
 
         options.setExperimentalOption("prefs", prefs);
 
         driver = new ChromeDriver(options);
-
-
-
         driver.get("https://automationexercise.com");
         driver.manage().window().maximize();
         wait = new WebDriverWait(driver, Duration.ofSeconds(15));
     }
+
+
+
 
 
 

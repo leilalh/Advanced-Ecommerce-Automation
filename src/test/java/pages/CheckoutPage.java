@@ -54,37 +54,39 @@ public class CheckoutPage {
     }
     public void clickDownloadInvoice(){
 
-        WebElement downloadBtn = wait.until(ExpectedConditions.elementToBeClickable(downladInvoice));
+        org.openqa.selenium.WebElement element = wait.until(org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated(downladInvoice));
+
         JavascriptExecutor js = (JavascriptExecutor)  driver;
-        js.executeScript("arguments[0].click();", downloadBtn);
+        js.executeScript("arguments[0].click();", element);
     }
 
     public boolean isFileDownloaded(String fileName) {
         String downloadPath = System.getProperty("user.dir") + java.io.File.separator + "target" + java.io.File.separator + "downloads";
         java.io.File dir = new java.io.File(downloadPath);
 
-        // Wait up to 10 seconds for the file to download
-        int timeout = 10;
-        while (timeout > 0) {
+        int waitTime = 10;
+        while (waitTime > 0) {
             if (dir.exists()) {
                 java.io.File[] files = dir.listFiles();
-                if (files != null) {
+                if (files != null && files.length > 0) {
                     for (java.io.File file : files) {
-                        if (file.getName().contains(fileName) || file.getName().endsWith(".txt")) {
+
+                        if (file.length() > 0 && (file.getName().contains("invoice") || file.getName().endsWith(".txt"))) {
                             return true;
                         }
                     }
                 }
             }
             try {
-                Thread.sleep(1000); // الانتظار ثانية واحدة في كل دورة
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            timeout--;
+            waitTime--;
         }
         return false;
     }
+
 
 
 
