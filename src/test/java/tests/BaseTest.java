@@ -69,6 +69,13 @@ public class BaseTest {
 
         Map<String, Object> prefs = new HashMap<String, Object>();
         prefs.put("profile.password_manager_leak_detection", false);
+
+
+        String downloadPath = System.getProperty("user.dir") + File.separator + "downloads";
+        prefs.put("download.default_directory", downloadPath);
+        prefs.put("download.prompt_for_download", false);
+        prefs.put("plugins.always_open_pdf_externally", true);
+
         options.setExperimentalOption("prefs",prefs);
 
 
