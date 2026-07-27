@@ -1,7 +1,9 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -51,17 +53,30 @@ public class CheckoutPage {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(orderConfirmationMessage)).getText();
     }
     public void clickDownloadInvoice(){
-        wait.until(ExpectedConditions.elementToBeClickable(downladInvoice)).click();
+
+        WebElement downloadBtn = wait.until(ExpectedConditions.elementToBeClickable(downladInvoice));
+        JavascriptExecutor js = (JavascriptExecutor)  driver;
+        js.executeScript("arguments[0].click();", downloadBtn);
     }
 
-    public boolean isFileDownloaded(String downloadPath, String fileName){
-        File dir = new File(downloadPath);
-        File[] dirContents = dir.listFiles();
+    public boolean isFileDownloaded(String expectedFileName) {
 
-        if (dirContents != null){
-            for (File file : dirContents){
-                if (file.getName().equals(fileName)){
-                    return true;
+        String[] possiblePaths = {
+                System.getProperty("user.dir") + java.io.File.separator + "target" + java.io.File.separator + "downloads",
+                System.getProperty("user.home") + java.io.File.separator + "Downloads",
+                "/home/runner/work/Advanced-Ecommerce-Automation/Advanced-Ecommerce-Automation/target/downloads"
+        };
+
+        for (String path : possiblePaths) {
+            java.io.File dir = new java.io.File(path);
+            if (dir.exists()) {
+                java.io.File[] files = dir.listFiles();
+                if (files != null) {
+                    for (java.io.File file : files) {
+                        if (file.getName().equals(expectedFileName)) {
+                            return true;
+                        }
+                    }
                 }
             }
         }
