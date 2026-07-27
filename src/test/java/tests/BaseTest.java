@@ -68,11 +68,7 @@ public class BaseTest {
         // Specify the download folder for the project
         String downloadPath = System.getProperty("user.dir") + java.io.File.separator + "target" + java.io.File.separator + "downloads";
 
-        // Create the folder if it doesn't exist
-        java.io.File downloadDir = new java.io.File(downloadPath);
-        if (!downloadDir.exists()) {
-            downloadDir.mkdirs();
-        }
+
 
         Map<String, Object> prefs = new HashMap<String, Object>();
         prefs.put("profile.password_manager_leak_detection", false);
@@ -84,11 +80,7 @@ public class BaseTest {
 
         driver = new ChromeDriver(options);
 
-        // Force Chrome Headless on Linux to allow downloads to the desired path
-        Map<String, Object> commandParams = new HashMap<>();
-        commandParams.put("behavior", "allow");
-        commandParams.put("downloadPath", downloadPath);
-        ((ChromeDriver) driver).executeCdpCommand("Page.setDownloadBehavior", commandParams);
+
 
         driver.get("https://automationexercise.com");
         driver.manage().window().maximize();
