@@ -33,11 +33,24 @@ public class HomePage {
                 wait.until(ExpectedConditions.visibilityOfElementLocated(cartButton)).click();
     }
 
-    public void removeAds(){
-        JavascriptExecutor js = (JavascriptExecutor) driver;
+    public void removeAds() {
+        try {
+            //  Refresh to Google Vignette   ads
+            if (driver.getCurrentUrl().contains("#google_vignette")) {
+                driver.navigate().refresh();
+            }
 
-        js.executeScript("document.querySelectorAll('iframe').forEach(e=> e.remove());");
-        System.out.println("Ads removed successfully using Javascript!");
+            //  Remove (iframes) and (Overlays)
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript(
+                    "document.querySelectorAll('iframe, .ad-container, div[id*=\"ad\"], ins.adsbygoogle')" +
+                            ".forEach(e => e.remove());"
+            );
+
+            System.out.println("Ads and overlays removed successfully using JavaScript!");
+        } catch (Exception e) {
+            System.out.println("No ads found to remove or error occurred: " + e.getMessage());
+        }
     }
 
 
