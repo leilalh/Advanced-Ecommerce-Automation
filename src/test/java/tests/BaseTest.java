@@ -64,11 +64,9 @@ public class BaseTest {
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--disable-gpu");
-        options.addArguments("--remote-allow-origins=*");
         options.addArguments("--window-size=1920,1080");
-        options.addArguments("--disable-extensions");
         options.addArguments("--disable-popup-blocking");
-        options.addArguments("--incognito");
+        options.addArguments("--block-new-web-contents");
 
 
         Map<String, Object> prefs = new HashMap<>();
