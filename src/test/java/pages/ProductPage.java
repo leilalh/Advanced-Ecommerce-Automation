@@ -25,6 +25,10 @@ public class ProductPage {
 
 
     public void clickViewProduct(){
+        if (driver.getCurrentUrl().contains("#google_vignette"))
+        {
+            driver.navigate().refresh();
+        }
 
         WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(viewproducts));
 
