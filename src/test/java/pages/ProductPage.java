@@ -11,7 +11,7 @@ public class ProductPage {
     private WebDriverWait wait;
 
 
-    private By viewproducts = By.xpath("//a[contains(text(), 'View Product')]");
+    private By viewproducts = By.xpath("(//a[contains(@href, '/product_details/')])[1]");
     private By quantityBox = By.id("quantity");
     private By addtocart = By.cssSelector("button.cart");
     private By continurshopping = By.xpath("//button[contains(text(), 'Continue Shopping')]");
@@ -25,6 +25,11 @@ public class ProductPage {
 
 
     public void clickViewProduct(){
+
+        if (!driver.getCurrentUrl().contains("/products")){
+            driver.get("https://automationexercise.com/products");
+        }
+
         if (driver.getCurrentUrl().contains("#google_vignette"))
         {
             driver.navigate().refresh();

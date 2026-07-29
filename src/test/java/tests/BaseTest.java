@@ -65,6 +65,7 @@ public class BaseTest {
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--disable-gpu");
         options.addArguments("--window-size=1920,1080");
+        options.addArguments("--start-maximized");
         options.addArguments("--disable-popup-blocking");
         options.addArguments("--block-new-web-contents");
         options.addArguments("--disable-blink-features=AutomationControlled");
