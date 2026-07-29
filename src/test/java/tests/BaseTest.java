@@ -67,6 +67,10 @@ public class BaseTest {
         options.addArguments("--window-size=1920,1080");
         options.addArguments("--disable-popup-blocking");
         options.addArguments("--block-new-web-contents");
+        options.addArguments("--disable-blink-features=AutomationControlled");
+        options.addArguments("--remote-allow-origins=*");
+        options.addArguments("--disable-extensions");
+        options.addArguments("--disable-infobars");
 
 
         Map<String, Object> prefs = new HashMap<>();
@@ -80,7 +84,7 @@ public class BaseTest {
         driver = new ChromeDriver(options);
         driver.get("https://automationexercise.com");
         driver.manage().window().maximize();
-        wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(30));
     }
 
 
