@@ -11,7 +11,7 @@ public class ProductPage {
     private WebDriverWait wait;
 
 
-    private By viewproducts = By.xpath("(//[contains(@href, '/product_details/')])[1]");
+    private By viewproducts = By.xpath("(//a[contains(@href, '/product_details/')])[1]");
     private By quantityBox = By.id("quantity");
     private By addtocart = By.cssSelector("button.cart");
     private By continurshopping = By.xpath("//button[contains(text(), 'Continue Shopping')]");
