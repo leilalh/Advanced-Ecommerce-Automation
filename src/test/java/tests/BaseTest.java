@@ -98,10 +98,20 @@ public class BaseTest {
     @AfterMethod
     public void recordFailure(ITestResult result) {
         if (ITestResult.FAILURE == result.getStatus()) {
-            TakesScreenshot camera = (TakesScreenshot) driver;
-            File screenshot = camera.getScreenshotAs(OutputType.FILE);
-
             try {
+
+                TakesScreenshot camera = (TakesScreenshot) driver;
+                String base64Screenshot = camera.getScreenshotAs(OutputType.BASE64);
+
+
+                test.fail("Test Failed ! View screenshot below:",
+                        com.aventstack.extentreports.MediaEntityBuilder
+                                .createScreenCaptureFromBase64String(base64Screenshot)
+                                .build()
+                );
+
+
+                File screenshot = camera.getScreenshotAs(OutputType.FILE);
                 String directoryPath = "screenshots/";
                 String fileName = result.getName() + "_" + System.currentTimeMillis() + ".png";
 
@@ -111,22 +121,20 @@ public class BaseTest {
                 }
 
                 Files.copy(
-                        screenshot.toPath(), Paths.get(directoryPath + fileName),
-                        StandardCopyOption.REPLACE_EXISTING);
-
-                //   Extent Report
-                test.fail("Test Failed ! View screenshot below:")
-                        .addScreenCaptureFromPath("../" + directoryPath + fileName);
+                        screenshot.toPath(),
+                        Paths.get(directoryPath + fileName),
+                        StandardCopyOption.REPLACE_EXISTING
+                );
 
                 System.out.println("Screenshot captured for failed test : " + result.getName());
-            } catch (java.io.IOException e) {
+
+            } catch (Exception e) {
                 System.out.println("Could not save screenshots: " + e.getMessage());
             }
         }
         else if (ITestResult.SUCCESS == result.getStatus()) {
             test.pass("Test passed successfully! ");
         }
-
 
         if (driver != null) {
             driver.quit();
